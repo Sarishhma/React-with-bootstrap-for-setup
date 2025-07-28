@@ -1,29 +1,28 @@
-import Todo from "./MyComponent/Todo";
+
+import { useEffect, useState } from 'react';
 import './App.css';
-import Add from "./MyComponent/Add";
+import Color from "./MyComponent/Color";
+
 
 function App() {
-  let todo = [
-    {
-      sno:1,
-      Title:"bath",
-      desc:"have to go take a bath",
-    },
-   {
-      sno:2,
-      Title:"eat",
-      desc:"have to go eat",
-   },
-   {
-      sno:3,
-      Title:"sleep",
-      desc:"have to go sleep",
-   }
-  ]
+  const [color,setColor]=useState(()=>{
+return localStorage.getItem("selectedcolor")|| "#295077ff";
+  })
+
+  useEffect(()=>{
+    document.body.style.backgroundColor=color;
+    localStorage.setItem("selectedcolor",color)
+  },[color])
   return (
+
    <>
-   <Todo todo={todo}/>
-   <Add add={add}/>
+   <Color/>
+   <div className="container">
+    <input type="color" value={color} onChange={(e)=>setColor(e.target.value)} />
+    <p>selected color:{color}</p>
+   </div>
+
+  
    </>
   );
 }
